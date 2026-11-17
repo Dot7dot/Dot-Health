@@ -1,0 +1,14 @@
+<!doctype html><meta charset=utf-8><link rel=stylesheet href=css/styles.css>
+<body style="margin:0;background:#fbf3e0"><div id=g style="display:grid;grid-template-columns:repeat(8,150px);gap:6px;padding:8px"></div>
+<script type=module>
+import {renderAnimal,randomAnimal,SPECIES_LIST,COLORS,FURS,ACCESSORIES} from './js/animals.js';
+const g=document.getElementById('g');const moods=['happy','ok','miss','sleep'];
+const q=new URLSearchParams(location.search);
+if(q.get('mode')==='species'){
+  for(const s of SPECIES_LIST) for(let c=0;c<6;c++){const a=randomAnimal('x');a.species=s;a.color=COLORS[c].id;a.fur=FURS[c%3].id;a.accessory='none';a.shiny=false;
+   const d=document.createElement('div');d.append(renderAnimal(a,{size:150,level:5,mood:moods[c%4]}));g.append(d);}
+} else if(q.get('mode')==='acc'){
+  for(const s of ['pig','rabbit','cow','sheep']) for(const ac of ACCESSORIES){const a=randomAnimal('x');a.species=s;a.accessory=ac.id;a.shiny=ac.id==='bell';
+   const d=document.createElement('div');d.append(renderAnimal(a,{size:150,level:5,mood:'ok'}));g.append(d);}
+} else { for(let i=0;i<48;i++){const a=randomAnimal('x');const d=document.createElement('div');d.append(renderAnimal(a,{size:150,level:5,mood:moods[i%4]}));g.append(d);} }
+</script>
