@@ -3,7 +3,7 @@
 > **狀態：部分驗證。** 本次已實際開啟並核對的來源列於「參考文獻」，標記為「已驗證」。下列行為只保留有已驗證來源支持的內容；未能取得來源的主張已移到「待驗證」或「未納入」，不作為遊戲依據。
 > 無法開啟的來源：PubMed 個別紀錄（429／閘道頁）、Harvard Health 的彈指節文章（首頁可開啟，但未找到該文章連結）、CDC／NIOSH（403）、ASHA（403）、ASSH／handcare.org（只回傳空殼頁）、Versus Arthritis 手部運動頁與 HSS 手部運動頁（404）、PMC1004074（驗證碼頁）。
 > 本次新開啟並核對：AAOS OrthoInfo 膝關節體能計畫（orthoinfo.org 在允許清單內，可直接開啟）、MedlinePlus 腕部傷害與腕隧道症候群頁、NHS 重複性勞損（RSI）頁。
-> 因此，**手部類行為目前有 4 項，但只有 1 項（肌腱滑動）有直接的手部運動來源**；其餘 3 項的依據是「職場休息、伸展手腕、保持中性腕位」等一般性衛教建議，其中的秒數與次數為本研究的操作化設定，不是來源數值。
+> 因此，**手部類行為目前有 6 項**：肌腱滑動、手腕與拇指活動度、前臂旋轉與手腕側偏（後兩項依據 Harvard Health 的一般手部活動度頁面）、手腕伸展、工作休息、自然腕位。其中只有前三項有直接的手部運動來源；其餘依據「職場休息、伸展手腕、保持中性腕位」等一般性衛教建議，其秒數與次數為本研究的操作化設定，不是來源數值。
 
 ## 摘要
 
@@ -40,7 +40,40 @@
 - 為什麼有效: Jokinen 等人（2021）的研究比較了主動滑動方案與傳統復健，結論是增加主動滑動未改善肌腱修復後的臨床結果。該研究顯示主動滑動可行、斷裂風險不明顯增加，但沒有證明它能預防健康人手指退化。
 - 注意事項: 手術後、受傷或有肌腱問題者，應依手治療師的指示。出現劇痛、腫脹加重、卡住或彈響加劇時停止。
 - 證據強度: **弱**。來源為肌腱修復患者，不是健康人的預防試驗；對上班族的效果屬推論。
-- 參考: `jokinen-2021-active-gliding`（已驗證）
+- 參考: `jokinen-2021-active-gliding`（已驗證）、`harvard-hand-mobility`（已驗證，一般族群的肌腱滑動動作：鉤子拳、全拳、直拳，回到伸直的手）
+- 補充（2026-11 更新）: Harvard Health 頁面對一般族群的建議為每個姿勢停留 5 至 10 秒、每組 10 次、每天 3 次（已驗證）。本行為目前仍用前述 3 秒、5 次的設定，兩者差異未有來源支持哪一種較佳；如要對齊 Harvard 的劑量，可調為 5–10 秒與 10 次。
+
+### 手腕與拇指活動度（Wrist and thumb range of motion）
+- 建議 id: `hand-wrist-thumb-rom`
+- 類型: timer
+- 建議時長（秒）: 240
+- 建議每日上限次數: 3
+- 建議分數 (1–5): 3
+- 步驟:
+  1. 前臂放在桌上，墊一條捲起的毛巾，手掌朝下、手垂在桌緣外。手慢慢往上抬，直到感到輕微拉伸，停留 5 至 10 秒，回到起始位置。重複 10 次。
+  2. 把手肘彎在身側、手掌朝上，重複步驟 1 的動作 10 次。
+  3. 拇指先朝外側張開，慢慢橫過手掌再回到起始位置，重複 10 次。
+  4. 每個動作都要慢而穩，避免疼痛。
+- 為什麼有效: Harvard Health 頁面列出腕部屈伸與拇指屈伸為一般建議的活動度運動，姿勢停留 5 至 10 秒、每組 10 次、每天 3 次（已驗證）。頁面說明這類運動用來維持關節正常活動範圍，手指或腕部活動範圍受限時較需要。
+- 注意事項: 頁面說明若手部疼痛或影響日常功能，應諮詢物理治療師（已驗證）。練習時若疼痛加劇，停止。
+- 證據強度: **弱至中**。來源為一般衛教，未以健康上班族為對象的試驗；總時長 240 秒為操作化估計（3 個動作 × 10 次 × 5–10 秒停留，加上轉換時間）。
+- 參考: `harvard-hand-mobility`（已驗證）
+
+### 前臂旋轉與手腕側偏（Forearm rotation and wrist deviation）
+- 建議 id: `hand-forearm-rotation`
+- 類型: timer
+- 建議時長（秒）: 240
+- 建議每日上限次數: 3
+- 建議分數 (1–5): 3
+- 步驟:
+  1. 站立或坐著，手臂在身側，手肘彎成 90 度，手掌朝下。把前臂旋轉，讓手掌朝上再朝下，重複 10 次。
+  2. 前臂放在桌上或膝上，墊毛巾，拇指朝上。手腕慢慢上下移動，走完整個活動範圍，重複 10 次。
+  3. 每個動作的停留時間為 5 至 10 秒（頁面的一般建議）。
+  4. 每個動作都要慢而穩，避免疼痛。
+- 為什麼有效: Harvard Health 頁面列出前臂旋前／旋後與腕部尺偏／橈偏為一般建議的活動度運動，並建議每組 10 次、每天 3 次（已驗證）。頁面說明這類運動用於恢復或維持正常的活動範圍。
+- 注意事項: 頁面說明若手部疼痛或功能受限，應由物理治療師指導（已驗證）。練習時若疼痛加劇，停止。
+- 證據強度: **弱至中**。同上，為一般衛教；240 秒總時長為操作化估計。
+- 參考: `harvard-hand-mobility`（已驗證）
 
 ### 伸展手掌與手腕（一般性伸展）
 - 建議 id: `hand-wrist-stretch`
@@ -287,6 +320,7 @@
 | `medlineplus-carpal-tunnel` | Carpal Tunnel Syndrome | NLM / MedlinePlus | 未確認 | 已驗證（自然腕位、工作休息與變換工作、伸展手與手腕；研究對打字與腕隧道的關聯尚無定論） | https://medlineplus.gov/carpaltunnelsyndrome.html |
 | `medlineplus-wrist-injuries` | Wrist Injuries and Disorders | NLM / MedlinePlus | 未確認 | 已驗證（職場中伸展與頻繁休息；注意人體工學與腕位） | https://medlineplus.gov/wristinjuriesanddisorders.html |
 | `nhs-rsi` | Repetitive strain injury (RSI) | NHS | 最後審閱 2026-05-28 | 已驗證（打字為常見誘因；保持活動、勿長時間休息；與雇主討論工作方式；麻木或刺痛為症狀） | https://www.nhs.uk/conditions/repetitive-strain-injury-rsi/ |
+| `harvard-hand-mobility` | 5 exercises to improve hand mobility | Harvard Health Publishing | 2025-12-16（審閱 Howard LeWine, MD） | 已驗證（腕部屈伸、前臂旋前旋後、腕部尺偏橈偏、拇指屈伸、手指肌腱滑動；每姿勢停留 5–10 秒、每組 10 次、每天 3 次；手部疼痛時諮詢物理治療師） | https://www.harvardhealth.org/pain/5-exercises-to-improve-hand-mobility |
 | `jokinen-2021-active-gliding` | Clinical Outcomes After Aggressive Active Early Motion and Modified Kleinert Regimens: Comparison of 2 Consecutive Cohorts（作者 Jokinen K 等；*Hand* 2021;18(2):335–339；PMID 34088233） | Hand (N Y) | 2021 | 已驗證（修復後患者；主動滑動未改善 38 個月的臨床結果；斷裂 5.3% vs 15.4%） | https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10035109/ |
 | `huffman-2024-physical-activity-oa` | The critical role of physical activity and weight management in knee and hip osteoarthritis: A narrative review（Huffman KF；*J Rheumatol* 2024;51(3):224–233；doi 10.3899/jrheum.2023-0819） | J Rheumatol | 2024 | 已驗證（綜述；運動與體重管理為骨關節炎管理的重點） | https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10922233/ |
 
@@ -304,7 +338,7 @@
 ## 仍待補
 
 - 完成 PubMed 與 OARSI 原文核對後，才能支持彈指節、肌腱滑動的人口比較，以及 OARSI 對葡萄糖胺、運動與減重的強度分級。
-- 手部運動的具體組數與秒數（手指張開、握力、腕部拉伸）仍需要可開啟的手部運動來源；目前能讀取的 MedlinePlus 與 NHS 頁面只有一般性建議。
+- 手指張開、握力與手腕伸展的具體組數與秒數仍需要可開啟的來源；Harvard Health 頁面涵蓋活動度與肌腱滑動，但未包含手指張開或握力動作。
 - 彈指節文章需要 Harvard Health 的正確文章網址。
 - CDC／NIOSH 與 ASHA 的噪音與耳鳴內容，需要可開啟的網址或允許其繞過 403 限制。
 - 台灣國民健康署資料尚未取得。
