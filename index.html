@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Dot Health 健康小農場</title>
+  <meta name="description" content="一邊做健康行為、一邊養農場動物的小遊戲">
+  <meta name="theme-color" content="#fdf6e3" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1c1812" media="(prefers-color-scheme: dark)">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Dot Health">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="app-header"><h1>🐣 Dot Health</h1><span class="hdr-pts" id="hdr-pts" aria-live="polite"></span></header>
+    <main id="views">
+      <section id="v-today" data-tab="today" aria-label="今天"></section>
+      <section id="v-move" data-tab="move" aria-label="動一動" hidden></section>
+      <section id="v-farm" data-tab="farm" aria-label="農場" class="farm-wrap" hidden></section>
+      <section id="v-stats" data-tab="stats" aria-label="紀錄" hidden></section>
+      <section id="v-settings" data-tab="settings" aria-label="設定" hidden></section>
+    </main>
+  </div>
+  <div class="tabbar">
+    <nav role="tablist" aria-label="主要分頁">
+      <button class="tab" role="tab" data-tab="today"><span class="ti">🌱</span>今天</button>
+      <button class="tab" role="tab" data-tab="move"><span class="ti">🧘</span>動一動</button>
+      <button class="tab" role="tab" data-tab="farm"><span class="ti">🏡</span>農場</button>
+      <button class="tab" role="tab" data-tab="stats"><span class="ti">📊</span>紀錄</button>
+      <button class="tab" role="tab" data-tab="settings"><span class="ti">⚙️</span>設定</button>
+    </nav>
+  </div>
+  <noscript>此應用程式需要啟用 JavaScript。</noscript>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
