@@ -1,7 +1,7 @@
-<!doctype html><meta charset=utf-8><link rel=stylesheet href=css/styles.css>
+<!doctype html><meta charset=utf-8><link rel=stylesheet href=../css/styles.css>
 <body style="margin:0;background:#fbf3e0"><div id=g style="display:grid;grid-template-columns:repeat(8,150px);gap:6px;padding:8px"></div>
 <script type=module>
-import {renderAnimal,randomAnimal,SPECIES_LIST,COLORS,FURS,ACCESSORIES} from './js/animals.js';
+import {renderAnimal,randomAnimal,SPECIES_LIST,COLORS,FURS,ACCESSORIES} from '../js/animals.js';
 const g=document.getElementById('g');const moods=['happy','ok','miss','sleep'];
 const q=new URLSearchParams(location.search);
 if(q.get('mode')==='species'){

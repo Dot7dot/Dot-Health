@@ -63,12 +63,12 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .btn-danger { background: var(--danger); color: #fff; box-shadow: 0 3px 0 #a93f3b; }
 .btn-big { min-width: 140px; min-height: 56px; font-size: 18px; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
-.btn-row .btn { flex: 1; padding: 0 12px; min-width: 100px; }
+.btn-row .btn { flex: 1; padding: 0 8px; min-width: 0; font-size: 14px; white-space: nowrap; }
 .icon-btn { min-width: 44px; min-height: 44px; border: 0; background: none; font-size: 18px; border-radius: 12px; }
 
 /* 今天 */
 .hero { text-align: center; padding-top: 8px; }
-.hero-stage { height: 232px; display: grid; place-items: end center; border-radius: 18px; position: relative; cursor: pointer;
+.hero-stage { height: 252px; display: grid; place-items: end center; border-radius: 18px; position: relative; cursor: pointer;
   background: radial-gradient(ellipse 62% 18% at 50% 88%, var(--grass) 0 70%, transparent 72%), linear-gradient(#fdf2cf 0, var(--grass-l) 100%); overflow: hidden; }
 @media (prefers-color-scheme: dark) { .hero-stage { background: radial-gradient(ellipse 62% 18% at 50% 88%, var(--grass-d) 0 70%, transparent 72%), linear-gradient(#3a3322 0, var(--grass-l) 100%); } }
 .hero-stage svg { margin-bottom: 14px; }

@@ -24,7 +24,7 @@ export function renderToday(el) {
   const wrap = h('div', { class: 'view-pad' });
 
   const stage = h('div', { class: 'hero-stage' });
-  const svg = animalNode(a, 200, { mood });
+  const svg = animalNode(a, 230, { mood });
   stage.append(svg);
   stage.addEventListener('click', () => { stage.classList.remove('hop'); void stage.offsetWidth; stage.classList.add('hop'); });
   const need = pr.need ? `${pr.into} / ${pr.need} XP（下一級還差 ${pr.next - a.xp}）` : '已滿級';
