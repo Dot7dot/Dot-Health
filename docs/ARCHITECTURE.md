@@ -51,6 +51,8 @@ export const REFERENCES = {
   // refId: { title, org, url, year? }
 };
 
+export const MYTHS = [ { category, title, body, refs } ]; // 迷思與不建議（refs 可為空＝「未找到證據」）
+
 export const ACTIVITIES = [
   {
     id: 'eye-20-20-20',          // kebab-case，永不更改（log 以此為鍵）
@@ -65,6 +67,8 @@ export const ACTIVITIES = [
     why: '為什麼有效（2–3 句，依據文獻）',
     caution: '注意事項（可空）',
     refs: ['aao-2020'],          // 對應 REFERENCES 的 key，至少一筆
+    evidence: 'weak',            // 'strong' | 'medium' | 'weak'（研究的「證據強度」；「弱至中」取較低者 → weak）
+    note: '誠實性備註（可空）',   // 例：時長/次數為遊戲設定、研究對象與使用者不同、來源間說法不一致
   },
 ];
 ```

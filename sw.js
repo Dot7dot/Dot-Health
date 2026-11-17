@@ -1,5 +1,5 @@
 // Service Worker：app shell 採 cache-first。每次發布請遞增 VERSION。
-const VERSION = 'v1';
+const VERSION = 'v2';
 const CACHE = `dot-health-${VERSION}`;
 const SHELL = [
   './', 'index.html', 'manifest.webmanifest', 'css/styles.css',

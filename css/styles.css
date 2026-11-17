@@ -106,6 +106,19 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .qplay { width: 52px; border: 2px solid var(--line); background: var(--card); border-radius: 16px; font-size: 18px; color: var(--grass-d); }
 
 /* 動一動 */
+.qtoggle { width: 100%; min-height: 44px; border: 2px dashed var(--line); background: none; border-radius: 14px; color: var(--grass-d); font-weight: 700; font-size: 14px; }
+.evid { font-size: 11px; font-weight: 700; border-radius: 99px; padding: 1px 8px; white-space: nowrap; border: 1px solid transparent; }
+.ev-strong { background: #d6f0cd; color: #23631a; } .ev-medium { background: #fff0c2; color: #7a5a00; } .ev-weak { background: #f0e6dc; color: #7a5a40; }
+@media (prefers-color-scheme: dark) { .ev-strong { background: #28502a; color: #b6ecab; } .ev-medium { background: #4d3f16; color: #f6dc8a; } .ev-weak { background: #3d3226; color: #d7c0a5; } }
+.meta-top { display: flex; align-items: center; gap: 6px; }
+.evnote { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--muted); background: var(--wood-l); border-radius: 12px; padding: 8px 10px; }
+.evnote .evid { flex: none; margin-top: 2px; }
+.myths { margin-top: 10px; border: 1px dashed var(--line); border-radius: 14px; padding: 0 12px; }
+.myths summary { min-height: 48px; display: flex; align-items: center; font-weight: 700; cursor: pointer; font-size: 14px; }
+.myth { padding: 8px 0 10px; border-top: 1px solid var(--line); font-size: 13px; }
+.myth b { display: block; margin-bottom: 2px; }
+.myth p { margin: 2px 0; color: var(--ink); }
+.myth-refs a { display: block; color: var(--grass-d); font-size: 12px; word-break: break-word; }
 .act-card { border-top: 1px solid var(--line); }
 .act-card summary { list-style: none; display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 8px 2px; cursor: pointer; }
 .act-card summary::-webkit-details-marker { display: none; }

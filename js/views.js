@@ -1,13 +1,21 @@
 // 今天 / 動一動 / 設定 三個分頁畫面
 import * as store from './store.js';
 import * as game from './game.js';
-import { CATEGORIES, ACTIVITIES, REFERENCES, DISCLAIMER } from './data/activities.js';
+import { CATEGORIES, ACTIVITIES, REFERENCES, MYTHS, DISCLAIMER } from './data/activities.js';
 import { SPECIES, MOODS } from './animals.js';
 import { h, toast, confirmDialog, alertDialog } from './ui.js';
 import { logAndCelebrate, animalNode, renameFlow } from './actions.js';
 import { startTimer } from './timer.js';
 
 const catOf = (id) => CATEGORIES.find((c) => c.id === id);
+const EVID = { strong: '強證據', medium: '中證據', weak: '弱證據' };
+const evidBadge = (a) => h('span', { class: 'evid ev-' + a.evidence, title: '證據強度：' + (EVID[a.evidence] || ''), text: EVID[a.evidence] || '' });
+
+// 「今天」各類別是否展開全部（僅為個人偏好，存 localStorage）
+const UI_KEY = 'dothealth.ui';
+function readUI() { try { return JSON.parse(localStorage.getItem(UI_KEY)) || {}; } catch (e) { return {}; } }
+function setExpanded(cat, on) { try { const u = readUI(); u.expanded = { ...(u.expanded || {}), [cat]: on }; localStorage.setItem(UI_KEY, JSON.stringify(u)); } catch (e) { /* 無法儲存時忽略 */ } }
+const TOP_N = 3;
 export function runTimer(act) {
   startTimer(act, { cat: catOf(act.category), onComplete: () => logAndCelebrate(act.id, null) });
 }
@@ -49,8 +57,10 @@ export function renderToday(el) {
 
   const list = h('section', { class: 'card' }, h('h3', { class: 'card-title', text: '快速打卡' }));
   for (const c of CATEGORIES) {
-    const acts = ACTIVITIES.filter((x) => x.category === c.id);
-    if (!acts.length) continue;
+    const all = ACTIVITIES.filter((x) => x.category === c.id);
+    if (!all.length) continue;
+    const expanded = !!(readUI().expanded || {})[c.id];
+    const acts = expanded ? all : all.slice(0, TOP_N);
     const grp = h('div', { class: 'qgroup' }, h('div', { class: 'qhead', style: { '--c': c.color } }, h('span', { text: `${c.icon} ${c.name}` })));
     for (const act of acts) {
       const n = game.todayCount(act.id);
@@ -64,6 +74,7 @@ export function renderToday(el) {
       if (act.kind === 'timer') row.append(h('button', { class: 'qplay', 'aria-label': `開始引導計時：${act.name}`, text: '▶', onclick: () => runTimer(act) }));
       grp.append(row);
     }
+    if (all.length > TOP_N) grp.append(h('button', { class: 'qtoggle', 'aria-expanded': String(expanded), text: expanded ? '收合' : `顯示全部 (${all.length})`, onclick: () => { setExpanded(c.id, !expanded); renderToday(el); } }));
     list.append(grp);
   }
   wrap.append(list);
@@ -85,7 +96,7 @@ export function renderMove(el) {
       d.addEventListener('toggle', () => { d.open ? openSet.add(act.id) : openSet.delete(act.id); });
       const dur = act.durationSec ? (act.durationSec >= 60 ? `${Math.round(act.durationSec / 6) / 10} 分鐘` : `${act.durationSec} 秒`) : '打卡';
       d.append(h('summary', null, h('span', { class: 'qtxt' }, h('b', { text: act.name }), h('small', { text: `${act.summary}` })),
-        h('span', { class: 'meta' }, h('span', { class: 'pts', text: `+${act.points}` }), h('small', { text: `${dur} · ${n}/${act.dailyCap}` }))));
+        h('span', { class: 'meta' }, h('span', { class: 'meta-top' }, evidBadge(act), h('span', { class: 'pts', text: `+${act.points}` })), h('small', { text: `${dur} · ${n}/${act.dailyCap}` }))));
       const steps = h('ol', { class: 'steps' }, act.steps.map((s) => h('li', { text: typeof s === 'string' ? s : s.sec ? `${s.text}（${s.sec} 秒）` : s.text })));
       const refs = h('ul', { class: 'refs' }, (act.refs || []).map((id) => {
         const r = REFERENCES[id]; if (!r) return null;
@@ -98,8 +109,21 @@ export function renderMove(el) {
       btns.append(quick);
       d.append(h('div', { class: 'act-body' }, h('h4', { text: '步驟' }), steps, h('h4', { text: '為什麼有效' }), h('p', { text: act.why }),
         act.caution ? h('div', { class: 'caution', text: '⚠️ ' + act.caution }) : null,
+        act.note ? h('div', { class: 'evnote' }, evidBadge(act), h('span', { text: act.note })) : null,
         refs.children.length ? [h('h4', { text: '參考文獻' }), refs] : null, btns));
       sec.append(d);
+    }
+    const myths = MYTHS.filter((m) => m.category === c.id);
+    if (myths.length) {
+      const md = h('details', { class: 'myths' });
+      if (openSet.has('myth-' + c.id)) md.open = true;
+      md.addEventListener('toggle', () => { md.open ? openSet.add('myth-' + c.id) : openSet.delete('myth-' + c.id); });
+      md.append(h('summary', { text: `🚫 迷思與不建議（${myths.length}）` }));
+      for (const m of myths) {
+        md.append(h('div', { class: 'myth' }, h('b', { text: m.title }), h('p', { text: m.body }),
+          m.refs.length ? h('p', { class: 'myth-refs' }, m.refs.map((id) => REFERENCES[id] ? h('a', { href: REFERENCES[id].url, target: '_blank', rel: 'noopener noreferrer', text: `${REFERENCES[id].org}：${REFERENCES[id].title}` }) : null)) : h('small', { class: 'note', text: '（未找到可核對的來源）' })));
+      }
+      sec.append(md);
     }
     wrap.append(sec);
   }
@@ -159,7 +183,7 @@ export function renderSettings(el) {
   const refSec = card('參考文獻');
   const li = (id) => { const r = REFERENCES[id]; return r ? h('li', null, h('a', { href: r.url, target: '_blank', rel: 'noopener noreferrer', text: r.title }), h('small', { text: ` ${r.org}${r.year ? ' · ' + r.year : ''}` })) : null; };
   for (const c of CATEGORIES) {
-    const ids = [...new Set(ACTIVITIES.filter((a) => a.category === c.id).flatMap((a) => a.refs || []))].filter((i) => REFERENCES[i]);
+    const ids = [...new Set([...ACTIVITIES.filter((a) => a.category === c.id).flatMap((a) => a.refs || []), ...MYTHS.filter((m) => m.category === c.id).flatMap((m) => m.refs || [])])].filter((i) => REFERENCES[i]);
     if (!ids.length) continue;
     ids.forEach((i) => used.add(i));
     refSec.append(h('h4', { text: `${c.icon} ${c.name}` }), h('ul', { class: 'refs' }, ids.map(li)));
