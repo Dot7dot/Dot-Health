@@ -8,9 +8,11 @@ import { renameFlow } from './actions.js';
 let root = null, scene = null, layer = null, infoEl = null;
 let running = false, raf = 0, lastT = 0, timeTimer = 0, ro = null;
 const sprites = new Map(); // id -> { el, flip, svgHost, x, y, tx, ty, pause, speed, dir, sig, bubble }
-const BASE = 100;
+const BASE = 104;
 
 const rnd = (a, b) => a + Math.random() * (b - a);
+const hw = (sp) => (sp.size || 80) * 0.5; // 半寬（含透視放大餘裕）
+const cx = (sp, b, x) => Math.min(b.xMax - hw(sp), Math.max(b.xMin + hw(sp), x));
 
 export function timeOfDay(d = new Date()) {
   const m = d.getHours() + d.getMinutes() / 60;
@@ -59,7 +61,7 @@ function applyTime() { if (scene) { scene.classList.remove('t-day', 't-dusk', 't
 
 function bounds() {
   const r = layer.getBoundingClientRect();
-  return { w: r.width, h: r.height, xMin: 30, xMax: Math.max(60, r.width - 30), yMin: r.height * 0.2 + 40, yMax: r.height - 8 };
+  return { w: r.width, h: r.height, xMin: 0, xMax: r.width, yMin: r.height * 0.2 + 40, yMax: r.height - 40 };
 }
 function factor(n) { return n <= 6 ? 1 : Math.max(0.55, 1 - (n - 6) * 0.045); }
 
@@ -81,7 +83,7 @@ function sync() {
       const el = h('div', { class: 'farm-animal', role: 'button', tabindex: '0' });
       const flip = h('div', { class: 'flipper' }); const bubble = h('div', { class: 'bubble-html' });
       el.append(flip, bubble); layer.append(el);
-      sp = { el, flip, bubble, x: rnd(b.xMin, b.xMax), y: rnd(b.yMin, b.yMax), tx: 0, ty: 0, pause: rnd(0, 2.5), speed: rnd(16, 30), dir: 1, sig: '', walking: false, svg: null };
+      sp = { el, flip, bubble, size: 90, x: rnd(60, Math.max(70, b.xMax - 60)), y: rnd(b.yMin, b.yMax), tx: 0, ty: 0, pause: rnd(0, 2.5), speed: rnd(16, 30), dir: 1, sig: '', walking: false, svg: null };
       sp.tx = sp.x; sp.ty = sp.y;
       const open = () => showCard(a.id);
       el.addEventListener('click', open);
@@ -100,7 +102,7 @@ function sync() {
       sp.bubble.textContent = MOODS[mood].emoji;
       sp.bubble.classList.toggle('cur', a.id === store.getState().currentAnimalId);
     }
-    sp.x = Math.min(b.xMax, Math.max(b.xMin, sp.x)); sp.y = Math.min(b.yMax, Math.max(b.yMin, sp.y));
+    sp.x = cx(sp, b, sp.x); sp.y = Math.min(b.yMax, Math.max(b.yMin, sp.y));
     place(sp, b);
   }
   const grads = list.filter((a) => a.graduatedAt).length;
@@ -119,9 +121,9 @@ function setWalking(sp, w) {
   sp.bubble.classList.toggle('show', !w);
 }
 function pickTarget(sp, b) {
-  sp.tx = rnd(b.xMin, b.xMax); sp.ty = rnd(b.yMin, b.yMax);
+  sp.tx = cx(sp, b, rnd(b.xMin, b.xMax)); sp.ty = rnd(b.yMin, b.yMax);
   // 偏好走較短距離
-  if (Math.random() < 0.6) { sp.tx = Math.min(b.xMax, Math.max(b.xMin, sp.x + rnd(-110, 110))); sp.ty = Math.min(b.yMax, Math.max(b.yMin, sp.y + rnd(-60, 60))); }
+  if (Math.random() < 0.6) { sp.tx = cx(sp, b, sp.x + rnd(-110, 110)); sp.ty = Math.min(b.yMax, Math.max(b.yMin, sp.y + rnd(-60, 60))); }
   sp.speed = rnd(16, 32);
 }
 

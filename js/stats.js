@@ -80,7 +80,7 @@ function heatmap(byDay, caption) {
   const lvl = (p) => (p <= 0 ? 0 : p < 5 ? 1 : p < 10 ? 2 : p < 20 ? 3 : 4);
   let s = `<svg viewBox="0 0 ${W} ${H}" class="chart heat" role="img" aria-label="近 12 週活動熱力圖">`;
   ['日', '一', '二', '三', '四', '五', '六'].forEach((t, r) => { if (r % 2 === 1) s += `<text x="${L - 6}" y="${T + r * (cell + gap) + cell * 0.68}" class="axis" text-anchor="end">${t}</text>`; });
-  let lastMonth = -1;
+  let lastMonth = -1, lastLabW = -9;
   for (let w = 0; w < weeks; w++) {
     for (let r = 0; r < 7; r++) {
       const k = store.addDays(start, w * 7 + r);
@@ -88,7 +88,7 @@ function heatmap(byDay, caption) {
       const pts = (byDay.get(k) || []).reduce((a, l) => a + l.points, 0);
       const x = L + w * (cell + gap), yy = T + r * (cell + gap);
       s += `<rect class="hc l${lvl(pts)}" data-k="${k}" data-p="${pts}" x="${x}" y="${yy}" width="${cell}" height="${cell}" rx="5"${k === today ? ' stroke-width="2"' : ''}><title>${k}：${pts} 分</title></rect>`;
-      if (r === 0) { const m = store.dayKeyToDate(k).getMonth(); if (m !== lastMonth) { lastMonth = m; s += `<text x="${x}" y="11" class="axis">${m + 1}月</text>`; } }
+      if (r === 0) { const m = store.dayKeyToDate(k).getMonth(); if (m !== lastMonth) { lastMonth = m; if (w - lastLabW >= 2) { lastLabW = w; s += `<text x="${x}" y="11" class="axis">${m + 1}月</text>`; } } }
     }
   }
   const el = svgEl(s + '</svg>');
